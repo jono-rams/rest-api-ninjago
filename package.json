@@ -22,5 +22,8 @@
   "bugs": {
     "url": "https://github.com/jono-rams/rest-api-ninjago/issues"
   },
-  "homepage": "https://github.com/jono-rams/rest-api-ninjago#readme"
+  "homepage": "https://github.com/jono-rams/rest-api-ninjago#readme",
+  "dependencies": {
+    "express": "^4.21.1"
+  }
 }
