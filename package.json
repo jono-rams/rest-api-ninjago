@@ -1,0 +1,26 @@
+{
+  "name": "rest-api-ninjago",
+  "version": "1.0.0",
+  "description": "A RESTful API built using Node, Express and MongoDB",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jono-rams/rest-api-ninjago.git"
+  },
+  "keywords": [
+    "restful",
+    "api",
+    "node",
+    "express",
+    "mongodb"
+  ],
+  "author": "Jonathan Rampersad",
+  "license": "GPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/jono-rams/rest-api-ninjago/issues"
+  },
+  "homepage": "https://github.com/jono-rams/rest-api-ninjago#readme"
+}
