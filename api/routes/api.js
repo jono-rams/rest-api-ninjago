@@ -4,41 +4,63 @@ const router = express.Router();
 
 // Get a list of ninjas from the database
 router.get("/ninjas", (req, res, next) => {
-  res.send({ type: "GET" });
+  Ninja.aggregate([
+    {
+      $geoNear: {
+        near: {
+          type: "Point",
+          coordinates: [parseFloat(req.query.lng), parseFloat(req.query.lat)],
+        },
+        maxDistance: 100000,
+        spherical: true,
+        distanceField: "distance"
+      },
+    },
+  ])
+    .then((ninjas) => {
+      res.send(ninjas);
+    })
+    .catch(next);
 });
 
 // Add a new ninja to the database
 router.post("/ninjas", (req, res, next) => {
-  Ninja.create(req.body).then((ninja) => {
-    res.send(ninja);
-  }).catch((err) => {
-    err.status = 422;
-    next(err);
-  });
+  Ninja.create(req.body)
+    .then((ninja) => {
+      res.send(ninja);
+    })
+    .catch((err) => {
+      err.status = 422;
+      next(err);
+    });
 });
 
 // Update an existing ninja in the database
 router.put("/ninjas/:id", (req, res, next) => {
   const id = req.params.id;
-  Ninja.findByIdAndUpdate(id, req.body).then(() => {
-    Ninja.findById(id).then((ninja) => {
-      res.send(ninja);
+  Ninja.findByIdAndUpdate(id, req.body)
+    .then(() => {
+      Ninja.findById(id).then((ninja) => {
+        res.send(ninja);
+      });
+    })
+    .catch((err) => {
+      err.status = 404;
+      next(err);
     });
-  }).catch((err) => {
-    err.status = 404;
-    next(err);
-  });
 });
 
 // Delete a ninja from the database
 router.delete("/ninjas/:id", (req, res, next) => {
   const id = req.params.id;
-  Ninja.findByIdAndDelete(id).then((ninja) => {
-    res.send(ninja);
-  }).catch((err) => {
-    err.status = 404;
-    next(err);
-  });
+  Ninja.findByIdAndDelete(id)
+    .then((ninja) => {
+      res.send(ninja);
+    })
+    .catch((err) => {
+      err.status = 404;
+      next(err);
+    });
 });
 
 module.exports = router;
