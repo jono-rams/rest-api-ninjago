@@ -1,4 +1,5 @@
 const express = require("express");
+const Ninja = require("../models/ninja");
 const router = express.Router();
 
 // Get a list of ninjas from the database
@@ -8,11 +9,8 @@ router.get("/ninjas", (req, res) => {
 
 // Add a new ninja to the database
 router.post("/ninjas", (req, res) => {
-  console.log(req.body);
-  res.send({ 
-    type: "POST",
-    name: req.body.name,
-    rank: req.body.rank
+  Ninja.create(req.body).then((ninja) => {
+    res.send(ninja);
   });
 });
 
